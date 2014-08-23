@@ -18,4 +18,4 @@ $ go get github.com/kyokomi/appConfig
 
 ## Author
 
-[kyokomi](github.com/kyokomi)
+[kyokomi](https://github.com/kyokomi)
