@@ -14,7 +14,7 @@ $ go get github.com/kyokomi/appConfig
 
 ## Licence
 
-[MIT](https:/github.com/kyokomi/appConfig/blob/master/LICENCE)
+[MIT](https://github.com/kyokomi/appConfig/blob/master/LICENSE)
 
 ## Author
 
