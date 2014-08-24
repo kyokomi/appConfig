@@ -10,13 +10,19 @@ import (
 
 type AppConfig struct {
 	ConfigFileName string
+	ConfigDirPath  string
 	AppName        string
 }
 
 // NewAppConfig create AppConfig.
 func NewAppConfig(appName string) *AppConfig {
+	dirPath, err := createAppConfigDirPath(appName)
+	if err != nil {
+		dirPath = "./"
+	}
 	return &AppConfig{
 		ConfigFileName: "config",
+		ConfigDirPath:  dirPath,
 		AppName:        appName,
 	}
 }
@@ -26,22 +32,16 @@ func (a AppConfig) WriteAppConfig(data []byte) error {
 	if err := createAppConfigDir(a.AppName); err != nil {
 		return err
 	}
+	return ioutil.WriteFile(a.AppConfigFilePath(), data, os.FileMode(0644))
+}
 
-	filePath, err := createAppConfigFilePath(a.AppName, a.ConfigFileName)
-	if err != nil {
-		return err
-	}
-
-	return ioutil.WriteFile(filePath, data, os.FileMode(0644))
+func (a AppConfig) AppConfigFilePath() string {
+	return strings.Join([]string{a.ConfigDirPath, a.ConfigFileName}, "/")
 }
 
 // configファイルを読み込む[]byte.
 func (a AppConfig) ReadAppConfig() ([]byte, error) {
-	filePath, err := createAppConfigFilePath(a.AppName, a.ConfigFileName)
-	if err != nil {
-		return nil, err
-	}
-	return ioutil.ReadFile(filePath)
+	return ioutil.ReadFile(a.AppConfigFilePath())
 }
 
 // ~/.{appName}ディレクトリを作成
@@ -73,13 +73,3 @@ func createAppConfigDirPath(appName string) (string, error) {
 	return dirPath, nil
 }
 
-func createAppConfigFilePath(appName, configFileName string) (string, error) {
-	// home
-	dirPath, err := createAppConfigDirPath(appName)
-	if err != nil {
-		return "", err
-	}
-
-	filePath := strings.Join([]string{dirPath, configFileName}, "/")
-	return filePath, nil
-}
