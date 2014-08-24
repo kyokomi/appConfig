@@ -8,21 +8,21 @@ import (
 	"strings"
 )
 
-type appConfig struct {
+type AppConfig struct {
 	ConfigFileName string
 	AppName        string
 }
 
 // NewAppConfig create AppConfig.
-func NewAppConfig(appName string) *appConfig {
-	return &appConfig{
+func NewAppConfig(appName string) *AppConfig {
+	return &AppConfig{
 		ConfigFileName: "config",
 		AppName:        appName,
 	}
 }
 
 // configファイルを作成する中身は空.
-func (a appConfig) WriteAppConfig(data []byte) error {
+func (a AppConfig) WriteAppConfig(data []byte) error {
 	if err := createAppConfigDir(a.AppName); err != nil {
 		return err
 	}
@@ -36,7 +36,7 @@ func (a appConfig) WriteAppConfig(data []byte) error {
 }
 
 // configファイルを読み込む[]byte.
-func (a appConfig) ReadAppConfig() ([]byte, error) {
+func (a AppConfig) ReadAppConfig() ([]byte, error) {
 	filePath, err := createAppConfigFilePath(a.AppName, a.ConfigFileName)
 	if err != nil {
 		return nil, err
