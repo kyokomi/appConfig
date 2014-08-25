@@ -44,6 +44,10 @@ func (a AppConfig) ReadAppConfig() ([]byte, error) {
 	return ioutil.ReadFile(a.AppConfigFilePath())
 }
 
+func (a AppConfig) RemoveAppConfig() error {
+	return os.RemoveAll(a.ConfigDirPath)
+}
+
 // ~/.{appName}ディレクトリを作成
 // すでに存在する場合スルー
 func createAppConfigDir(appName string) error {
