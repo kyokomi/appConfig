@@ -46,7 +46,7 @@ func main() {
 $ go get github.com/kyokomi/appConfig
 ```
 
-## Licence
+## License
 
 [MIT](https://github.com/kyokomi/appConfig/blob/master/LICENSE)
 
