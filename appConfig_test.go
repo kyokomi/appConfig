@@ -9,7 +9,7 @@ import (
 
 func TestWriteReadAppConfig(t *testing.T) {
 
-	c := NewAppConfig("GoSandbox")
+	c := NewDefaultAppConfig("GoSandbox")
 
 	data := "aaaaaaaaaaaaaaaaaaaaa"
 	if err := c.WriteAppConfig(bytes.NewBufferString(data).Bytes()); err != nil {
