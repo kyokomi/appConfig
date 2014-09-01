@@ -15,13 +15,17 @@ type AppConfig struct {
 }
 
 // NewAppConfig create AppConfig.
-func NewAppConfig(appName string) *AppConfig {
+func NewDefaultAppConfig(appName string) *AppConfig {
+	return NewAppConfig(appName, "config")
+}
+
+func NewAppConfig(appName, configFileName string) *AppConfig {
 	dirPath, err := createAppConfigDirPath(appName)
 	if err != nil {
 		dirPath = "./"
 	}
 	return &AppConfig{
-		ConfigFileName: "config",
+		ConfigFileName: configFileName,
 		ConfigDirPath:  dirPath,
 		AppName:        appName,
 	}
@@ -76,4 +80,3 @@ func createAppConfigDirPath(appName string) (string, error) {
 	dirPath := strings.Join([]string{usr.HomeDir, dirName}, "/")
 	return dirPath, nil
 }
-
