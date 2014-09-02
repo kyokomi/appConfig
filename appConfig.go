@@ -33,7 +33,7 @@ func NewAppConfig(appName, configFileName string) *AppConfig {
 
 // configファイルを作成する中身は空.
 func (a AppConfig) WriteAppConfig(data []byte) error {
-	if err := createAppConfigDir(a.AppName); err != nil {
+	if err := createAppConfigDir(a.ConfigDirPath); err != nil {
 		return err
 	}
 	return ioutil.WriteFile(a.AppConfigFilePath(), data, os.FileMode(0644))
@@ -54,12 +54,7 @@ func (a AppConfig) RemoveAppConfig() error {
 
 // ~/.{appName}ディレクトリを作成
 // すでに存在する場合スルー
-func createAppConfigDir(appName string) error {
-	dirPath, err := createAppConfigDirPath(appName)
-	if err != nil {
-		return err
-	}
-
+func createAppConfigDir(dirPath string) error {
 	// check
 	if _, err := ioutil.ReadDir(dirPath); err == nil {
 		return nil
